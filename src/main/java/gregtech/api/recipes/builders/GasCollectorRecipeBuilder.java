@@ -39,7 +39,7 @@ public class GasCollectorRecipeBuilder extends RecipeBuilder<GasCollectorRecipeB
             this.dimension(((List<Integer>) value).get(0));
             return true;
         }
-        return false;
+        return super.applyProperty(key, value);
     }
 
     public GasCollectorRecipeBuilder dimension(int dimensionID) {
