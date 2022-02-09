@@ -24,6 +24,7 @@ import gregtech.common.MetaFluids;
 import gregtech.common.blocks.*;
 import gregtech.client.renderer.handler.FacadeRenderer;
 import gregtech.common.items.MetaItems;
+import gregtech.common.items.ToolItems;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -142,6 +143,7 @@ public class ClientProxy extends CommonProxy {
     public void registerColors() {
         MetaBlocks.registerColors();
         MetaItems.registerColors();
+        ToolItems.registerColors();
     }
 
     @SubscribeEvent
