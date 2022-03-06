@@ -9,12 +9,11 @@ import codechicken.lib.vec.Cuboid6;
 import gregtech.api.GregTechAPI;
 import gregtech.api.block.BlockCustomParticle;
 import gregtech.api.capability.GregtechCapabilities;
-import gregtech.api.capability.tool.IScrewdriverItem;
-import gregtech.api.capability.tool.IWrenchItem;
 import gregtech.api.cover.CoverBehavior;
 import gregtech.api.cover.ICoverable;
 import gregtech.api.cover.IFacadeCover;
-import gregtech.api.items.toolitem.IToolStats;
+import gregtech.api.items.toolitem.IGTTool;
+import gregtech.api.items.toolitem.ToolHelper;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityHolder;
 import gregtech.api.pipenet.IBlockAppearance;
@@ -33,16 +32,13 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving.SpawnPlacementType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityWitherSkull;
-import net.minecraft.init.Enchantments;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -53,7 +49,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
@@ -305,33 +300,19 @@ public class BlockMachine extends BlockCustomParticle implements ITileEntityProv
         if (metaTileEntity == null || rayTraceResult == null) {
             return false;
         }
-
-        if (itemStack.hasCapability(GregtechCapabilities.CAPABILITY_SCREWDRIVER, null)) {
-            IScrewdriverItem screwdriver = itemStack.getCapability(GregtechCapabilities.CAPABILITY_SCREWDRIVER, null);
-
-            if (screwdriver.damageItem(DamageValues.DAMAGE_FOR_SCREWDRIVER, true) &&
-                    metaTileEntity.onCoverScrewdriverClick(playerIn, hand, rayTraceResult)) {
-                screwdriver.damageItem(DamageValues.DAMAGE_FOR_SCREWDRIVER, false);
-                IToolStats.onOtherUse(itemStack, worldIn, pos);
-                return true;
+        if (itemStack.getItem().getToolClasses(itemStack).contains("screwdriver")) {
+            metaTileEntity.onCoverScrewdriverClick(playerIn, hand, rayTraceResult);
+            ToolHelper.damageItem(itemStack, playerIn, DamageValues.DAMAGE_FOR_SCREWDRIVER);
+            if (itemStack.getItem() instanceof IGTTool) {
+                ((IGTTool) itemStack.getItem()).playSound(playerIn);
             }
-            return false;
-        }
-
-        if (itemStack.hasCapability(GregtechCapabilities.CAPABILITY_WRENCH, null)) {
-            IWrenchItem wrenchItem = itemStack.getCapability(GregtechCapabilities.CAPABILITY_WRENCH, null);
-            EnumFacing wrenchDirection = ICoverable.determineGridSideHit(rayTraceResult);
-
-            if (wrenchItem.damageItem(DamageValues.DAMAGE_FOR_WRENCH, true) &&
-                    metaTileEntity.onWrenchClick(playerIn, hand, wrenchDirection, rayTraceResult)) {
-
-                wrenchItem.damageItem(DamageValues.DAMAGE_FOR_WRENCH, false);
-                IToolStats.onOtherUse(itemStack, worldIn, pos);
-                return true;
+        } else if (itemStack.getItem().getToolClasses(itemStack).contains("wrench")) {
+            metaTileEntity.onWrenchClick(playerIn, hand, ICoverable.determineGridSideHit(rayTraceResult), rayTraceResult);
+            ToolHelper.damageItem(itemStack, playerIn, DamageValues.DAMAGE_FOR_WRENCH);
+            if (itemStack.getItem() instanceof IGTTool) {
+                ((IGTTool) itemStack.getItem()).playSound(playerIn);
             }
-            return false;
         }
-
         return metaTileEntity.onCoverRightClick(playerIn, hand, rayTraceResult);
     }
 
