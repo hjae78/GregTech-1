@@ -1,11 +1,9 @@
 package gregtech.common.metatileentities.storage;
 
 import com.google.common.collect.Lists;
-import gregtech.api.items.toolitem.ToolMetaItem;
 import gregtech.api.util.DummyContainer;
 import gregtech.common.inventory.itemsource.ItemSourceList;
 import gregtech.common.inventory.itemsource.sources.TileItemSource;
-import gregtech.common.items.MetaTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
