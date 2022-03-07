@@ -1204,6 +1204,7 @@ item.material.oreprefix.dustRefined=Refined Pile of %s Dust
 item.material.oreprefix.dustPure=Purified Pile of %s Dust
 item.material.oreprefix.dust=%s Dust
 item.material.oreprefix.nugget=%s Nugget
+item.material.oreprefix.chunk=%s Chunk
 item.material.oreprefix.plateAlloy=
 item.material.oreprefix.plateDense=Dense %s Plate
 item.material.oreprefix.plateQuintuple=Quintuple %s Plate
