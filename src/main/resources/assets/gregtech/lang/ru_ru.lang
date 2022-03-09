@@ -2392,7 +2392,6 @@ gregtech.cable.loss_per_block=Потеря за блок: §c%d
 
 gregtech.fluid_pipe.throughput=Пропускная способность: §e%d мВ/т
 gregtech.fluid_pipe.max_temperature=Максимальная температура: §c%dK
-gregtech.fluid_pipe.non_gas_proof=Не может переносить газы.
 
 gregtech.multiblock.work_paused=Работа приостановлена.
 gregtech.multiblock.running=Работает отлично.
