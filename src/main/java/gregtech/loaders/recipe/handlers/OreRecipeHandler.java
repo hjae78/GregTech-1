@@ -14,6 +14,7 @@ import gregtech.api.unification.material.properties.PropertyKey;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.unification.stack.UnificationEntry;
+import gregtech.api.util.GTLog;
 import gregtech.api.util.GTUtility;
 import gregtech.common.ConfigHolder;
 import net.minecraft.item.ItemStack;
@@ -120,6 +121,13 @@ public class OreRecipeHandler {
         ItemStack impureDustStack = OreDictUnifier.get(OrePrefix.dustImpure, material);
         Material byproductMaterial = GTUtility.selectItemInList(0, material, property.getOreByProducts(), Material.class);
 
+        // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
+        if(!byproductMaterial.hasProperty(PropertyKey.DUST) && !byproductMaterial.hasProperty(PropertyKey.FLUID)) {
+            if(ConfigHolder.misc.debug) {
+                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Crushed Processing", material, byproductMaterial);
+            }
+        }
+
         //fallback for dirtyGravel, shard & clump
         if (impureDustStack.isEmpty()) {
             impureDustStack = GTUtility.copy(
@@ -205,6 +213,14 @@ public class OreRecipeHandler {
         ItemStack byproductStack = OreDictUnifier.get(OrePrefix.dust, GTUtility.selectItemInList(2,
                 material, property.getOreByProducts(), Material.class), 1);
 
+        // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
+        if(byproductStack.isEmpty()) {
+            if(ConfigHolder.misc.debug) {
+                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Crushed Centrifuged Processing", material,
+                        GTUtility.selectItemInList(2, material, property.getOreByProducts(), Material.class));
+            }
+        }
+
         RecipeMaps.FORGE_HAMMER_RECIPES.recipeBuilder()
                 .input(centrifugedPrefix, material)
                 .outputs(dustStack)
@@ -230,6 +246,13 @@ public class OreRecipeHandler {
         Material byproductMaterial = GTUtility.selectItemInList(
                 1, material, property.getOreByProducts(), Material.class);
         ItemStack byproductStack = OreDictUnifier.get(OrePrefix.dust, byproductMaterial);
+
+        // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
+        if(byproductStack.isEmpty()) {
+            if(ConfigHolder.misc.debug) {
+                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Crushed Purified Processing", material, byproductMaterial);
+            }
+        }
 
         RecipeMaps.FORGE_HAMMER_RECIPES.recipeBuilder()
                 .input(purifiedPrefix, material)
@@ -303,6 +326,13 @@ public class OreRecipeHandler {
         Material byproduct = GTUtility.selectItemInList(
                 0, material, property.getOreByProducts(), Material.class);
 
+        // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
+        if(!byproduct.hasProperty(PropertyKey.DUST) && !byproduct.hasProperty(PropertyKey.FLUID)) {
+            if(ConfigHolder.misc.debug) {
+                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Dirty Dust Processing", material, byproduct);
+            }
+        }
+
         RecipeBuilder<?> builder = RecipeMaps.CENTRIFUGE_RECIPES.recipeBuilder()
                 .input(dustPrefix, material)
                 .outputs(dustStack)
@@ -331,6 +361,13 @@ public class OreRecipeHandler {
         Material byproductMaterial = GTUtility.selectItemInList(
                 1, material, property.getOreByProducts(), Material.class);
         ItemStack dustStack = OreDictUnifier.get(OrePrefix.dust, material);
+
+        // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
+        if(!byproductMaterial.hasProperty(PropertyKey.DUST) && !byproductMaterial.hasProperty(PropertyKey.FLUID)) {
+            if(ConfigHolder.misc.debug) {
+                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Pure Dust Processing", material, byproductMaterial);
+            }
+        }
 
         if (property.getSeparatedInto() != null && !property.getSeparatedInto().isEmpty()) {
             List<Material> separatedMaterial = property.getSeparatedInto();
