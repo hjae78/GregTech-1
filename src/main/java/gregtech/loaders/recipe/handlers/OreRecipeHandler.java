@@ -124,7 +124,7 @@ public class OreRecipeHandler {
         // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
         if(!byproductMaterial.hasProperty(PropertyKey.DUST) && !byproductMaterial.hasProperty(PropertyKey.FLUID)) {
             if(ConfigHolder.misc.debug) {
-                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Crushed Processing", material, byproductMaterial);
+                GTLog.logger.error("Attempted to add Ore Byproduct of hidden material {} for material {} in Crushed Processing", byproductMaterial, material);
             }
         }
 
@@ -216,8 +216,8 @@ public class OreRecipeHandler {
         // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
         if(byproductStack.isEmpty()) {
             if(ConfigHolder.misc.debug) {
-                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Crushed Centrifuged Processing", material,
-                        GTUtility.selectItemInList(2, material, property.getOreByProducts(), Material.class));
+                GTLog.logger.error("Attempted to add Ore Byproduct of hidden material {} for material {} in Crushed Centrifuged Processing",
+                        GTUtility.selectItemInList(2, material, property.getOreByProducts(), Material.class), material);
             }
         }
 
@@ -250,7 +250,7 @@ public class OreRecipeHandler {
         // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
         if(byproductStack.isEmpty()) {
             if(ConfigHolder.misc.debug) {
-                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Crushed Purified Processing", material, byproductMaterial);
+                GTLog.logger.error("Attempted to add Ore Byproduct of hidden material {} for material {} in Crushed Purified Processing", byproductMaterial, material);
             }
         }
 
@@ -329,7 +329,7 @@ public class OreRecipeHandler {
         // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
         if(!byproduct.hasProperty(PropertyKey.DUST) && !byproduct.hasProperty(PropertyKey.FLUID)) {
             if(ConfigHolder.misc.debug) {
-                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Dirty Dust Processing", material, byproduct);
+                GTLog.logger.error("Attempted to add Ore Byproduct of hidden material {} for material {} in Dirty Dust Processing", byproduct, material);
             }
         }
 
@@ -365,7 +365,7 @@ public class OreRecipeHandler {
         // Catch materials whose byproducts are the "hidden" materials that do not have any properties or generation
         if(!byproductMaterial.hasProperty(PropertyKey.DUST) && !byproductMaterial.hasProperty(PropertyKey.FLUID)) {
             if(ConfigHolder.misc.debug) {
-                GTLog.logger.warn("Attempted to add Ore Byproduct of hidden material {} for material {} in Pure Dust Processing", material, byproductMaterial);
+                GTLog.logger.error("Attempted to add Ore Byproduct of hidden material {} for material {} in Pure Dust Processing", byproductMaterial, material);
             }
         }
 
