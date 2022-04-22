@@ -136,7 +136,7 @@ public class MinerLogic {
             IBlockState blockState = metaTileEntity.getWorld().getBlockState(blocksToMine.getFirst());
 
             // if the block is not air, harvest it
-            if (blockState != Blocks.AIR.getDefaultState()) {
+            if (GTUtility.isOre(blockState.getBlock())) {
                 // get the small ore drops, if a small ore
                 getSmallOreBlockDrops(blockDrops, world, blocksToMine.getFirst(), blockState);
                 // get the block's drops.
